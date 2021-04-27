@@ -63,7 +63,7 @@ namespace FootballMatchProject
             // 
             this.label_teamsheader.AutoSize = true;
             this.label_teamsheader.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_teamsheader.Location = new System.Drawing.Point(12, 9);
+            this.label_teamsheader.Location = new System.Drawing.Point(13, 13);
             this.label_teamsheader.Name = "label_teamsheader";
             this.label_teamsheader.Size = new System.Drawing.Size(100, 13);
             this.label_teamsheader.TabIndex = 2;
@@ -73,7 +73,7 @@ namespace FootballMatchProject
             // 
             this.label_matchesheader.AutoSize = true;
             this.label_matchesheader.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_matchesheader.Location = new System.Drawing.Point(265, 9);
+            this.label_matchesheader.Location = new System.Drawing.Point(265, 13);
             this.label_matchesheader.Name = "label_matchesheader";
             this.label_matchesheader.Size = new System.Drawing.Size(55, 13);
             this.label_matchesheader.TabIndex = 3;
