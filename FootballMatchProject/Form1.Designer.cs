@@ -88,6 +88,7 @@ namespace FootballMatchProject
             this.button_ball.TabIndex = 4;
             this.button_ball.Text = "Draw Next Ball";
             this.button_ball.UseVisualStyleBackColor = true;
+            this.button_ball.Click += new System.EventHandler(this.button_ball_Click);
             // 
             // button_skip
             // 
