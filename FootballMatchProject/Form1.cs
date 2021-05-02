@@ -34,7 +34,7 @@ namespace FootballMatchProject
             new_match.team1 = teams[index1]; //Assign the first team
             new_match.team2 = teams[index2]; //Assign the second team
             Label match_label = new Label(); //Create a new label for the match
-            match_label.Location = new Point(256, 50); //Set the location
+            match_label.Location = new Point(265, 38+(25*team_data.matches.Count)); //Set the location
             match_label.Text = $"{new_match.team1.name} VS {new_match.team2.name}"; //Set the text to show the two teams
             this.Controls.Add(match_label); //Display on screen
             new_match.label = match_label; //Assign this label to the team object
@@ -71,7 +71,6 @@ namespace FootballMatchProject
             InitializeComponent();
             team_data.available_teams = setup_team_list(); //Initialise the list of team objects
             team_data.matches = new List<match>(); //Initialise the list of match objects
-            match new_match = generate_match(team_data.available_teams, 1, 2); //Generates a new match using index 1 and index 2
         }
 
         private void button_ball_Click(object sender, EventArgs e) //Triggered when the "Draw Next Ball" button is pressed
@@ -83,15 +82,49 @@ namespace FootballMatchProject
                 ball_index = rnd.Next(team_data.available_teams.Count); //Select a different random index
             }
             label_chosen.Text = Convert.ToString(ball_index+1); //Display chosen ball number
-            team_data.available_teams[ball_index].label.ForeColor = System.Drawing.Color.Red; //Set the chosen team to be red
             team_data.available_teams[ball_index].selected = true; //Mark this team as selected so it won't be picked again
+            if (team_data.choosing_team == false) { //If this is the first team of the match
+                team_data.available_teams[ball_index].label.ForeColor = System.Drawing.Color.Red; //Set the chosen team to be red
+                team_data.choosing_team = true; //Set to true so that we know the first team of a match is selected and we only need one more
+                team_data.chosen_team_index = ball_index; //Set the current chosen index
+            }
+            else //If we've already chosen the first team of the match
+            {
+                match new_match = generate_match(team_data.available_teams, team_data.chosen_team_index, ball_index); //Generate match using the selected team indexes
+                team_data.matches.Add(new_match); //Add the new match to the list of matches
+                team_data.available_teams[ball_index].label.ForeColor = Color.FromArgb(128, 128, 128); //Set the used teams to grey
+                team_data.available_teams[team_data.chosen_team_index].label.ForeColor = Color.FromArgb(128, 128, 128); //Set the used teams to grey
+                team_data.choosing_team = false; //No longer choosing a team
+            }
+
+            if (team_data.matches.Count >= team_data.available_teams.Count*0.5) //If we've run out of possible matches
+            {
+                button_ball.Enabled = false; //Disable the button
+            }
         }
 
         static class team_data //All team data is stored in this class so it can be accessed from different functions
         {
             public static List<team> available_teams; //List of teams 
             public static List<match> matches; //List of matches
+            public static int chosen_team_index; //Currently highlighted team
+            public static bool choosing_team = false; //After selecting the first team in a match, this variable is set to true
         }
 
+        private void button_reset_Click(object sender, EventArgs e) //Reset button
+        {
+            foreach (team team_obj in team_data.available_teams) //For each team in the team list
+            {
+                team_obj.label.Dispose(); //Remove the label from the screen
+            }
+            foreach (match match_obj in team_data.matches) //For each match in the match list
+            {
+                match_obj.label.Dispose(); //Remove the label from the screen
+            }
+            team_data.available_teams = setup_team_list(); //Initialise the list of team objects
+            team_data.matches = new List<match>(); //Initialise the list of match objects
+            button_ball.Enabled = true; //Re-enable the "Draw Next Ball" button
+            label_chosen.Text = "None"; //Reset the chosen ball number text
+        }
     }
 }

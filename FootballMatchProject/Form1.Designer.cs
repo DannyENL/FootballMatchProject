@@ -35,6 +35,7 @@ namespace FootballMatchProject
             this.label_matchesheader = new System.Windows.Forms.Label();
             this.button_ball = new System.Windows.Forms.Button();
             this.button_skip = new System.Windows.Forms.Button();
+            this.button_reset = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label_ballheader
@@ -100,11 +101,23 @@ namespace FootballMatchProject
             this.button_skip.Text = "Skip To End";
             this.button_skip.UseVisualStyleBackColor = true;
             // 
+            // button_reset
+            // 
+            this.button_reset.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_reset.Location = new System.Drawing.Point(638, 106);
+            this.button_reset.Name = "button_reset";
+            this.button_reset.Size = new System.Drawing.Size(150, 41);
+            this.button_reset.TabIndex = 6;
+            this.button_reset.Text = "Reset";
+            this.button_reset.UseVisualStyleBackColor = true;
+            this.button_reset.Click += new System.EventHandler(this.button_reset_Click);
+            // 
             // window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.button_reset);
             this.Controls.Add(this.button_skip);
             this.Controls.Add(this.button_ball);
             this.Controls.Add(this.label_matchesheader);
@@ -126,6 +139,7 @@ namespace FootballMatchProject
         private System.Windows.Forms.Label label_matchesheader;
         private System.Windows.Forms.Button button_ball;
         private System.Windows.Forms.Button button_skip;
+        private System.Windows.Forms.Button button_reset;
     }
 }
 
