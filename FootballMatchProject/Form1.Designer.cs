@@ -74,11 +74,11 @@ namespace FootballMatchProject
             // 
             this.label_matchesheader.AutoSize = true;
             this.label_matchesheader.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_matchesheader.Location = new System.Drawing.Point(265, 13);
+            this.label_matchesheader.Location = new System.Drawing.Point(433, 13);
             this.label_matchesheader.Name = "label_matchesheader";
-            this.label_matchesheader.Size = new System.Drawing.Size(55, 13);
+            this.label_matchesheader.Size = new System.Drawing.Size(150, 13);
             this.label_matchesheader.TabIndex = 3;
-            this.label_matchesheader.Text = "Matches";
+            this.label_matchesheader.Text = "Matches (Home vs Away)";
             // 
             // button_ball
             // 

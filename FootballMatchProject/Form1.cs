@@ -20,6 +20,7 @@ namespace FootballMatchProject
             public team team2; //Away team
             public Label label; //On-screen label
         }
+
         public class team //Team class
         {
             public bool selected = false;
@@ -34,8 +35,9 @@ namespace FootballMatchProject
             new_match.team1 = teams[index1]; //Assign the first team
             new_match.team2 = teams[index2]; //Assign the second team
             Label match_label = new Label(); //Create a new label for the match
-            match_label.Location = new Point(265, 38+(25*team_data.matches.Count)); //Set the location
-            match_label.Text = $"{new_match.team1.name} VS {new_match.team2.name}"; //Set the text to show the two teams
+            match_label.Width = 210;
+            match_label.Location = new Point(433, 38+(25*team_data.matches.Count)); //Set the location
+            match_label.Text = $"{new_match.team1.name} v. {new_match.team2.name}"; //Set the text to show the two teams
             this.Controls.Add(match_label); //Display on screen
             new_match.label = match_label; //Assign this label to the team object
             return (new_match);
@@ -49,19 +51,25 @@ namespace FootballMatchProject
             List<team> teams_list = new List<team>(); //Create a new list for the list of teams 
             int team_number = 1; //Associated ball number
             int y_position = 38; //initial y position for first team label
+            int x_position = 13;
             foreach (string team_name in team_names) //Loop through for each team name in the list
             {
                 team new_team = new team(); //Create a new team object
                 new_team.name = team_name; //Set the object's name
                 new_team.number = team_number; //Set the object's associated ball number
                 Label team_label = new Label(); //Create a new label for the team
-                team_label.Location = new Point(13, y_position); //Set the location
+                team_label.Width = 210;
+                team_label.Location = new Point(x_position, y_position); //Set the location
                 team_label.Text = $"{team_number}. {team_name}"; //Set the text to show the team number and the team name
                 this.Controls.Add(team_label); //Display on screen
                 new_team.label = team_label; //Assign this label to the team object
                 teams_list.Add(new_team); //Add this object to the list of teams
                 team_number += 1; //Increase the ball number to be used for the next one
                 y_position += 25; //Increase y position for the next team
+                if (y_position>420) {
+                    y_position = 38;
+                    x_position += 210;
+                }
             }
             return (teams_list); //Return the final list of teams
         }
@@ -101,6 +109,12 @@ namespace FootballMatchProject
             {
                 button_ball.Enabled = false; //Disable the "Draw Next Ball" button (no more balls to draw)
                 button_skip.Enabled = false; //Disable the "Skip To End" button (we're at the end)
+                string csv_text = "Home,Away"; //Create the column headers for the CSV file
+                foreach (match match in team_data.matches) //For each match generated
+                {
+                    csv_text += $"\n{match.team1.name},{match.team2.name}"; //Add the match data to the bottom of the csv
+                }
+                File.WriteAllText("matches.csv", csv_text); //Write the csv data to matches.csv
             }
         }
 
