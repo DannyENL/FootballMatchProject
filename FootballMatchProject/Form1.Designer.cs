@@ -100,6 +100,7 @@ namespace FootballMatchProject
             this.button_skip.TabIndex = 5;
             this.button_skip.Text = "Skip To End";
             this.button_skip.UseVisualStyleBackColor = true;
+            this.button_skip.Click += new System.EventHandler(this.button_skip_Click);
             // 
             // button_reset
             // 

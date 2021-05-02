@@ -99,7 +99,8 @@ namespace FootballMatchProject
 
             if (team_data.matches.Count >= team_data.available_teams.Count*0.5) //If we've run out of possible matches
             {
-                button_ball.Enabled = false; //Disable the button
+                button_ball.Enabled = false; //Disable the "Draw Next Ball" button (no more balls to draw)
+                button_skip.Enabled = false; //Disable the "Skip To End" button (we're at the end)
             }
         }
 
@@ -124,7 +125,16 @@ namespace FootballMatchProject
             team_data.available_teams = setup_team_list(); //Initialise the list of team objects
             team_data.matches = new List<match>(); //Initialise the list of match objects
             button_ball.Enabled = true; //Re-enable the "Draw Next Ball" button
+            button_skip.Enabled = true; //Re-enable the "Skip To End" button
             label_chosen.Text = "None"; //Reset the chosen ball number text
+        }
+
+        private void button_skip_Click(object sender, EventArgs e)
+        {
+            while (button_ball.Enabled == true) //As long as we can click the Draw Next Ball button,
+            {
+                button_ball_Click(null, null); //keep clicking it.
+            }
         }
     }
 }
