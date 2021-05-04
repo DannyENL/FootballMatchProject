@@ -45,9 +45,27 @@ namespace FootballMatchProject
 
         private List<team> setup_team_list() //This function creates the list of team objects and their on-screen labels
         {
+            //Read team file
             var team_file = File.ReadAllLines("teams.txt"); //Reads the contents of teams.txt and splits based on line
             List<string> team_names = new List<string>(team_file); //Create a list of the team names extracted from the file
+                
+            //Data validation
+            while ((team_names.Count < 2) || (team_names.Count > 32)) //While you have an invalid number of teams
+            {
+                DialogResult user_choice = MessageBox.Show("Your teams.txt data is invalid. Write your team names separated by linebreaks. You can have any number of teams greater than 1 and less than 33.", "Error", //Show error box
+                MessageBoxButtons.RetryCancel, MessageBoxIcon.Error); //"Retry" and "Cancel" buttons are available
+                if (user_choice == DialogResult.Cancel) //If you click "Cancel"
+                {
+                    System.Environment.Exit(1); //Exit program
+                }
+                else //If you click "Retry"
+                {
+                    team_file = File.ReadAllLines("teams.txt"); //Re-read the "teams.txt" file to see if the data updated
+                    team_names = new List<string>(team_file); //Create a new list of the team names extracted from the file
+                }
+            }
 
+            //Create list and fill with team objects
             List<team> teams_list = new List<team>(); //Create a new list for the list of teams 
             int team_number = 1; //Associated ball number
             int y_position = 38; //initial y position for first team label
@@ -71,11 +89,14 @@ namespace FootballMatchProject
                     x_position += 210;
                 }
             }
+
+            //Output
             return (teams_list); //Return the final list of teams
         }
 
         public window()
         {
+            //Startup
             InitializeComponent();
             team_data.available_teams = setup_team_list(); //Initialise the list of team objects
             team_data.matches = new List<match>(); //Initialise the list of match objects
@@ -105,7 +126,7 @@ namespace FootballMatchProject
                 team_data.choosing_team = false; //No longer choosing a team
             }
 
-            if (team_data.matches.Count >= team_data.available_teams.Count*0.5) //If we've run out of possible matches
+            if ((team_data.matches.Count >= team_data.available_teams.Count*0.5) || (team_data.matches.Count >= team_data.available_teams.Count * 0.5 - 1 && team_data.available_teams.Count % 2 != 0)) //If we've run out of possible matches
             {
                 button_ball.Enabled = false; //Disable the "Draw Next Ball" button (no more balls to draw)
                 button_skip.Enabled = false; //Disable the "Skip To End" button (we're at the end)
